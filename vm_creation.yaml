@@ -1,0 +1,28 @@
+
+---
+- name: Creating an OPNsense VM from Template 
+  hosts: ubuntu-desktop
+  tasks:
+       - name: create the VM from the template    
+         community.general.proxmox_kvm:
+          api_user: root@pam
+          api_password: oracle
+          api_host: 192.168.0.24
+          node: azeem
+          clone: opnsense-template
+          name: telg-fw1
+          full: yes
+          timeout: 3000
+
+       - name: start the VM    
+         community.general.proxmox_kvm:
+          api_user: root@pam
+          api_password: oracle
+          api_host: 192.168.0.24
+          node: azeem
+          name: telg-fw1
+          state: started
+
+       - name: Wait for 5 min for the VM to start, Sing your favorite song
+         ansible.builtin.pause:
+          minutes: 2
